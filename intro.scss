@@ -1,0 +1,146 @@
+// to make variable in sass
+$text-color: red;
+.blog-post {
+    h1 {
+      text-align: center;
+      color: blue;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+div {
+  -webkit-box-shadow: 0px 0px 4px #fff;
+  -moz-box-shadow: 0px 0px 4px #fff;
+  -ms-box-shadow: 0px 0px 4px #fff;
+  box-shadow: 0px 0px 4px #fff;
+}
+// Mixins are like function for css
+@mixin box-shadow($x, $y, $blur, $c){ 
+  -webkit-box-shadow: $x $y $blur $c;
+  -moz-box-shadow: $x $y $blur $c;
+  -ms-box-shadow: $x $y $blur $c;
+  box-shadow: $x $y $blur $c;
+}
+
+@mixin border-radius($rad){
+    -webkit-border-radius: $rad;
+    -moz-border-radius: $rad;
+    -ms-border-radius: $rad;
+    border-radius: $rad;
+}
+#awesome{
+    @include border-radius(15px);    
+}
+
+// @if, @else if and @else   
+@mixin make-bold($bool){
+  @if $bool == true{
+    font-weight: bold;
+  }
+}
+@mixin text-effect($val){
+  @if $val == danger {
+    color: red;
+  }
+  @else if $val == alert{
+    color: yellow;
+  }
+  @else if $val == success{
+    color: green;
+  }
+  @else{
+    color: black;
+  }
+}
+
+@mixin border-stroke($val){
+  @if $val == light{
+    border: 1px solid black;
+  }
+  @else if $val == medium{
+    border: 3px solid black;
+  }
+  @else if $val == heavy{
+    border: 6px solid black;
+  }
+  @else{
+    border: none;
+  }
+} 
+
+// @for
+@for $i from 1 through 12{
+  // classses {styles:stylessss}
+  .col-#{$i} {width: 100%/12*$i}
+}
+// The #{$i} part is the syntax to 
+//combine a variable (i) with text 
+  //to make a string. 
+// when the sass file onverted to css
+  // the results:
+.col-1 {
+  width: 8.33333%;
+}
+.col-2 {
+  width: 16.66667%;
+}
+//...
+.col-12 {
+  width: 100%;
+}
+// test
+@for $j from 1 through 6{
+  .text-#{$j} {font-size: 15px*$j}
+}
+
+  // list
+@each $color in blue, green, red{
+  .#{$color}-text {color: $color;}
+}
+// map
+$colors: (color1: blue, color2: red, color3: green);
+@each $key, $color in $colors{
+  .#{$color}-text {color: $color;}
+}
+.blue-text {
+  color: blue;
+}
+  // ...
+$colors: (c1: blue, c2: black, c3: red);
+@each $key, $color in $colors{
+  .#{$color}-bg {background-color: $color;}
+}
+
+  // while loop
+$i: 1;
+@while $i < 13{
+  .col-#{$i} {width: 100%/12 * $i;}
+  $i: $i + 1;
+}  
+
+$i: 1;
+@while $i < 6{
+  .text-#{$i} {font-size: 15px*$i;}
+  $i: $i + 1;
+}
+
+// extend feature
+// to borrow CSS rules from one element
+// and build upon them in another
+.panel{
+  background-color: red;
+  height: 70px;
+  border: 2px solid green;
+}
+.big-panel{
+  @extend .panel;
+  width: 150px;
+  font-size: 2em;
+}
+.info{
+  background-color: magenta;
+}
+.info-important{
+  @extend .info;
+}
